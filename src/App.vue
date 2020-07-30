@@ -2,59 +2,88 @@
   <v-app>
     <v-app-bar
       app
-      color="primary"
+      color="blue-grey darken-4"
       dark
     >
       <div class="d-flex align-center">
         <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
+          alt="Tavern Logo"
+          class="img-logo shrink mr-2"
           contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          :src="require('./assets/logo.png')"
           transition="scale-transition"
-          width="40"
+          min-width="30"
+          width="30"
+          @click="routeHome"
         />
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+        <v-toolbar-title>Will's Tavern</v-toolbar-title>
+
       </div>
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            text
+            small
+            v-bind="attrs"
+            v-on="on"
+          >
+            Help
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item>
+            <v-list-item-title><router-link to="/about">About</router-link></v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title>Guidebook</v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title>Feature Request</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
     <v-main>
-      <HelloWorld/>
+      <router-view/>
     </v-main>
+    <v-footer 
+      dark
+      color="blue-grey darken-4"
+    >
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }}</div>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+  import router from '@/router'
 
-export default {
-  name: 'App',
+  export default {
+    name: 'App',
 
-  components: {
-    HelloWorld,
-  },
+    components: {
+      //
+    },
 
-  data: () => ({
-    //
-  }),
-};
+    data: () => ({
+      //
+    }),
+    methods: {
+      routeHome () {
+        router.push({ path: '/'}).catch(()=>{})
+      }
+    }
+  };
 </script>
+
+<style scoped>
+  .img-logo {
+    cursor: pointer;
+  }
+</style>
